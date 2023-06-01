@@ -1,7 +1,7 @@
 use crate::contract::{App, AppResult};
 use crate::msg::{AppQueryMsg, ConfigResponse};
 use crate::state::CONFIG;
-use cosmwasm_std::{to_binary, Binary, Deps, Env, StdResult, QueryRequest, WasmQuery};
+use cosmwasm_std::{to_binary, Binary, Deps, Env, QueryRequest, StdResult, WasmQuery};
 
 pub fn query_handler(deps: Deps, _env: Env, _app: &App, msg: AppQueryMsg) -> AppResult<Binary> {
     match msg {
@@ -15,11 +15,11 @@ fn query_config(deps: Deps) -> StdResult<ConfigResponse> {
     Ok(ConfigResponse {})
 }
 
-pub fn query_market_config(deps: Deps) -> StdResult<moneymarket::market::ConfigResponse>{
+pub fn query_market_config(deps: Deps) -> StdResult<moneymarket::market::ConfigResponse> {
     let config = CONFIG.load(deps.storage)?;
-    let config_response = deps.querier.query(&QueryRequest::Wasm(WasmQuery::Smart{
+    let config_response = deps.querier.query(&QueryRequest::Wasm(WasmQuery::Smart {
         contract_addr: config.market_contract.to_string(),
-        msg: to_binary(&moneymarket::market::QueryMsg::Config {  })?
+        msg: to_binary(&moneymarket::market::QueryMsg::Config {})?,
     }))?;
 
     Ok(config_response)

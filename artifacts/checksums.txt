@@ -1,0 +1,1 @@
+8031ec59b9a355bad4b8dfa60fa70625f07235ee80fee34d9bbc5ea05d815cb7  cavern_protocol_abstract_module.wasm

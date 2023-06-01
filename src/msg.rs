@@ -17,7 +17,7 @@ impl app::AppQueryMsg for AppQueryMsg {}
 /// App instantiate message
 #[cosmwasm_schema::cw_serde]
 pub struct AppInstantiateMsg {
-    pub market_contract: String
+    pub market_contract: String,
 }
 
 /// App execute messages
@@ -26,12 +26,8 @@ pub struct AppInstantiateMsg {
 #[cfg_attr(feature = "interface", impl_into(ExecuteMsg))]
 pub enum AppExecuteMsg {
     UpdateConfig {},
-    Deposit {
-        amount: Uint128
-    },
-    Withdraw {
-        amount: Uint128
-    },
+    Deposit { amount: Uint128 },
+    Withdraw { amount: Uint128 },
 }
 
 #[cosmwasm_schema::cw_serde]

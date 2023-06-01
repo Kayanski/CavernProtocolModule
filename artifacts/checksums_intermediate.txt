@@ -1,0 +1,1 @@
+d5f0479c5ee4fc1666e1d65ee76a8f91491b4db8356f38ff27cb5746fb32a8dd  ./target/wasm32-unknown-unknown/release/cavern_protocol_abstract_module.wasm

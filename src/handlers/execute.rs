@@ -1,7 +1,7 @@
-use cosmwasm_std::{Uint128, CosmosMsg};
-use abstract_sdk::{Execution};
 use abstract_sdk::features::AbstractResponse;
-use cosmwasm_std::{DepsMut, Env, MessageInfo, Response, wasm_execute, Coin, to_binary};
+use abstract_sdk::Execution;
+use cosmwasm_std::{to_binary, wasm_execute, Coin, DepsMut, Env, MessageInfo, Response};
+use cosmwasm_std::{CosmosMsg, Uint128};
 use cw_asset::{Asset, AssetInfo};
 
 use crate::handlers::query::query_market_config;
@@ -19,8 +19,8 @@ pub fn execute_handler(
     msg: AppExecuteMsg,
 ) -> AppResult {
     match msg {
-        AppExecuteMsg::Deposit {amount} => execute_deposit(deps, info, app, amount),
-        AppExecuteMsg::Withdraw {amount} => execute_withdraw(deps, info, app, amount),
+        AppExecuteMsg::Deposit { amount } => execute_deposit(deps, info, app, amount),
+        AppExecuteMsg::Withdraw { amount } => execute_withdraw(deps, info, app, amount),
         AppExecuteMsg::UpdateConfig {} => update_config(deps, info, app),
     }
 }
@@ -36,15 +36,18 @@ fn execute_deposit(deps: DepsMut, msg_info: MessageInfo, app: App, amount: Uint1
     let executor = app.executor(deps.as_ref());
     let deposit_msg: CosmosMsg = wasm_execute(
         config.market_contract,
-        &moneymarket::market::ExecuteMsg::DepositStable {  },
-        vec![Coin{
+        &moneymarket::market::ExecuteMsg::DepositStable {},
+        vec![Coin {
             denom: market_config.stable_denom,
-            amount
-        }]
-    )?.into();
+            amount,
+        }],
+    )?
+    .into();
     let deposit_msg = executor.execute(vec![deposit_msg.into()]);
 
-    Ok(app.tag_response(Response::default(), "update_config").add_messages(deposit_msg))
+    Ok(app
+        .tag_response(Response::default(), "update_config")
+        .add_messages(deposit_msg))
 }
 
 /// Update the configuration of the app
@@ -57,14 +60,21 @@ fn execute_withdraw(deps: DepsMut, msg_info: MessageInfo, app: App, amount: Uint
     // We call an action on the proxy directly
     let executor = app.executor(deps.as_ref());
 
-    let redeem_message = Asset{
+    let redeem_message = Asset {
         amount,
-        info: AssetInfo::Cw20(deps.api.addr_validate(&market_config.aterra_contract)?)
-    }.send_msg(config.market_contract, to_binary(&moneymarket::market::Cw20HookMsg::RedeemStable {  })?)?.into();
+        info: AssetInfo::Cw20(deps.api.addr_validate(&market_config.aterra_contract)?),
+    }
+    .send_msg(
+        config.market_contract,
+        to_binary(&moneymarket::market::Cw20HookMsg::RedeemStable {})?,
+    )?
+    .into();
 
     let redeem_messages = executor.execute(vec![redeem_message]);
 
-    Ok(app.tag_response(Response::default(), "update_config").add_messages(redeem_messages))
+    Ok(app
+        .tag_response(Response::default(), "update_config")
+        .add_messages(redeem_messages))
 }
 
 /// Update the configuration of the app
