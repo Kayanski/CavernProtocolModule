@@ -6,7 +6,6 @@ use cosmwasm_std::{to_binary, Binary, Deps, Env, StdResult, QueryRequest, WasmQu
 pub fn query_handler(deps: Deps, _env: Env, _app: &App, msg: AppQueryMsg) -> AppResult<Binary> {
     match msg {
         AppQueryMsg::Config {} => to_binary(&query_config(deps)?),
-        AppQueryMsg::MarketConfig {} => to_binary(&query_market_config(deps)?),
     }
     .map_err(Into::into)
 }

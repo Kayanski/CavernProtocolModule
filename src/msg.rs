@@ -41,8 +41,6 @@ pub enum AppExecuteMsg {
 pub enum AppQueryMsg {
     #[returns(ConfigResponse)]
     Config {},
-    #[returns(moneymarket::market::ConfigResponse)]
-    MarketConfig {},
 }
 
 #[cosmwasm_schema::cw_serde]
