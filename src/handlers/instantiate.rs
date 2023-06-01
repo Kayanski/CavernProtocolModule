@@ -9,12 +9,13 @@ pub fn instantiate_handler(
     _env: Env,
     _info: MessageInfo,
     _app: App,
-    _msg: AppInstantiateMsg,
+    msg: AppInstantiateMsg,
 ) -> AppResult {
-    let config: Config = Config {};
+    let config: Config = Config {
+        market_contract: deps.api.addr_validate(&msg.market_contract)?
+    };
 
     CONFIG.save(deps.storage, &config)?;
 
-    // Example reply that doesn't do anything
     Ok(Response::new())
 }

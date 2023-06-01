@@ -1,13 +1,12 @@
 [package]
-name = "app"
+name = "cavern-protocol-abstract-module"
 version = "0.0.1"
 authors = [
-  "CyberHoward <cyberhoward@protonmail.com>",
-  "Adair <adair@abstract.money>",
+  "Kayanski <nicolas@abstract.money>",
   "Abstract Money <contact@abstract.money>",
 ]
 edition = "2021"
-homepage = ""
+homepage = "https://cavernprotocol.com"
 documentation = ""
 repository = ""
 license = "GPL-3.0-or-later"
@@ -55,8 +54,9 @@ abstract-sdk = { version = "0.15.1"}
 abstract-interface = { version = "0.15.1", optional = true }
 cw-orch = { version = "0.12", optional = true }
 
+moneymarket = { git = "https://github.com/CavernPerson/money-market-contracts"}
 [dev-dependencies]
-app = { path = ".", features = ["interface"] }
+cavern-protocol-abstract-module = {path=".", features=["interface"]}
 abstract-interface = { version = "0.15.1", features = [
   "daemon",
 ] }
