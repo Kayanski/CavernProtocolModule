@@ -52,7 +52,7 @@ abstract-sdk = { version = "0.15.1" }
 
 # Dependencies for interface
 abstract-interface = { version = "0.15.1", optional = true }
-cw-orch = { version = "0.12", optional = true }
+cw-orch = { version = "0.13", optional = true }
 
 moneymarket = { git = "https://github.com/CavernPerson/money-market-contracts" }
 cw20 = "1.0.1"
@@ -65,4 +65,4 @@ speculoos = "0.11.0"
 semver = "1.0"
 dotenv = "0.15.0"
 env_logger = "0.10.0"
-cw-orch = { version = "0.12", features = ["daemon"] }
+cw-orch = { version = "0.13", features = ["daemon"] }
