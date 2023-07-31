@@ -59,7 +59,7 @@ cw20 = "1.0.1"
 [dev-dependencies]
 cavern-protocol-abstract-module = { path = ".", features = ["interface"] }
 abstract-interface = { version = "0.15.1", features = ["daemon"] }
-abstract-testing = { version = "0.15.1" }
+abstract-testing = { version = "0.18.0" }
 abstract-sdk = { version = "0.15.1", features = ["test-utils"] }
 speculoos = "0.11.0"
 semver = "1.0"
